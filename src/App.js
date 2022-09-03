@@ -6,9 +6,9 @@ export default class App extends Component {
     this.state = {
       userName: 'Kuna',
       todoItems: [
-        {action: 'Buy Milk', done: false},
-        {action: 'Buy Veggies', done: false},
-        {action: 'Buy Drinks', done: false},
+        {action: 'Buy Milk'},
+        {action: 'Buy Veggies'},
+        {action: 'Buy Drinks'},
       ],
       newToDo: '',
     }
@@ -20,22 +20,39 @@ export default class App extends Component {
     this.setState({
       todoItems:[
         ...this.state.todoItems,
-        {action: this.state.newToDo, done:false}
+        {action: this.state.newToDo}
       ]
     })
   }
-  toogleDone = (todo) => 
-  this.setState({
-    todoItems: this.state.todoItems.map((item)=>
-    item.action === todo.action ? { ...item, done : !item.done} : item
-    ),
-  })
+  // toogleDone = (todo) => 
+  // this.setState({
+  //   todoItems: this.state.todoItems.map((item)=>
+  //   item.action === todo.action ? { ...item, done : !item.done} : item
+  //   ),
+  //   // todoItems: this.state.todoItems.maps((items)=>{
+  //   //   return(
+  //   //     if(item.action === todo.action){
+  //   //       this.todoItems.done = 'false'
+  //   //     }
+  //   //     else{
+  //   //       this.todoItems.done = 'true'
+  //   //     }
+  //   //   )
+  //   })
+    handleClick = (event,action) =>{
+      let data = [...this.state.todoItems];
+      this.setState({
+        todoItems: data.filter((val)=> (val.action !== action)),
+      })
+    }
   todoRows = () => 
     this.state.todoItems.map((item)=>(
       <tr key = {item.action}>
-        <td>{item.action}</td>
+        <td>{item.action}
+       
+        </td>
         <td>
-          <input type='checkbox' checked = {item.done} onChange = {()=> this.toogleDone(item)}></input>
+        <button className='btn btn-primary ' onClick ={(event)=>this.handleClick(event, item.action)}>Done</button>
         </td>
       </tr>
     ))
